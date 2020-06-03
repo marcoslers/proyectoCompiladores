@@ -1,0 +1,37 @@
+%{
+	#include <string.h>
+	#include "util.h"
+	#include "y.tab.h"
+	#include "errormsg.h"
+
+	int charPos=1;
+
+	extern YYSTYPE yylval;
+
+	int yywrap(void){
+ 		charPos=1;
+ 		return 1;
+	}
+
+	void adjust(void){
+ 		EM_tokPos=charPos;
+ 		charPos+=yyleng;
+	}
+
+	#define MAX_STR_CONST   256
+	char string_buf[MAX_STR_CONST];
+	char *string_buf_ptr;
+
+%}
+
+%%
+
+" "      	  {adjust(); continue;}
+\n       	  {adjust(); EM_newline(); continue;}
+","		  {adjust(); return ',';}
+[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+despliega 	  {adjust(); return DESPLIEGA;}
+
+<<EOF>>       {printf("\nFin de Archivo encontrado."); exit(0); }
+
+.             {adjust(); EM_error(EM_tokPos, "token ilegal\n");}
