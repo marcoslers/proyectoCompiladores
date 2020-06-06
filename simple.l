@@ -28,7 +28,7 @@
 
 " "      	  {adjust(); continue;}
 \n       	  {adjust(); EM_newline(); continue;}
-","		  {adjust(); return ',';}
+","		  	  {adjust(); return ',';}
 [0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 despliega 	  {adjust(); return DESPLIEGA;}
 
