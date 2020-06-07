@@ -24,6 +24,8 @@
 
 %}
 
+%x comentario
+
 %%
 
 " "				{adjust(); continue;}
@@ -57,8 +59,12 @@ mientras		{adjust(); return MIENTRAS;}
 "\|"			{adjust(); return OR;}
 
 [a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
-[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+[0-9]+		  	{adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
-<<EOF>>       {printf("\nFin de Archivo encontrado."); exit(0); }
+\-{3}						BEGIN(comentario);
+<comentario>[^\-]*			{adjust(); continue;}		
+<comentario>\-{3}			{adjust(); BEGIN(INITIAL);};
 
-.             {adjust(); EM_error(EM_tokPos, "token ilegal\n");}
+<<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0); }
+
+.             	{adjust(); EM_error(EM_tokPos, "token ilegal\n");}
