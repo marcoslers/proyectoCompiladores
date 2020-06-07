@@ -31,7 +31,7 @@
 ","		  	  {adjust(); return ',';}
 "="			  {adjust(); return ASIGNA;}
 despliega 	  {adjust(); return DESPLIEGA;}
-[a-z]+		  {adjust(); yylval.sval=String(yytext); return ID;}
+[a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
 
