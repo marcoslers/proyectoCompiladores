@@ -36,6 +36,7 @@ si 				{adjust(); return SI;}
 otro			{adjust(); return OTRO;}
 mientras		{adjust(); return MIENTRAS;}
 
+
 ","		  	  {adjust(); return ',';}
 "="			  {adjust(); return ASIGNA;}
 
