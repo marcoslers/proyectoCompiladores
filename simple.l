@@ -36,25 +36,27 @@ si 				{adjust(); return SI;}
 otro			{adjust(); return OTRO;}
 mientras		{adjust(); return MIENTRAS;}
 
-;
-{
-}
-=
-(
-)
-:
-+
--
-*
-/
-==
-<>
->
-<
->=
-<=
-&
-|
+";"				{adjust(); return ';';}			
+"{"				{adjust(); return '{';}
+"}"				{adjust(); return '}';}
+"="				{adjust(); return '=';}
+"("				{adjust(); return '(';}
+")"				{adjust(); return ')';}	
+":"				{adjust(); return ':';}
+"+"				{adjust(); return '+';}	
+"-"				{adjust(); return '-';}	
+"*"				{adjust(); return '*';}
+"/"				{adjust(); return '/';}
+
+
+==				{adjust(); return ':';}
+<>				{adjust(); return ':';}
+">"				{adjust(); return ':';}
+"<"				{adjust(); return ':';}
+>=				{adjust(); return ':';}
+<=				{adjust(); return ':';}
+"&"				{adjust(); return ':';}
+"|"				{adjust(); return ':';}
 
 
 [a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
