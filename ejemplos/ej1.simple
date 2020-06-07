@@ -6,3 +6,4 @@ si
 otro
 mientras
 32344
+si a==b & b>c
