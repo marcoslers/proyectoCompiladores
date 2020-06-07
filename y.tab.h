@@ -5,18 +5,12 @@ typedef union {
    int ival;
    string sval;
 } YYSTYPE;
-#define	ID	258
-#define	CADE	259
-#define	ENTERO	260
-#define	DESPLIEGA 261
-#define SI        262
-#define OTRO      263
-#define AND       264 
-#define OR        265 
-#define NOT       266 
-#define DIFER     267 
-#define IGUAL     268 
-#define ASIGNA	  269
+#define	REGRESA			258
+#define	DEF				259
+#define	DESPLIEGA		260
+#define	SI 				261
+#define OTRO       		262
+#define MIENTRAS      	263
 extern YYSTYPE yylval;
 #endif
 

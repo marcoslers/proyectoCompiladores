@@ -11,8 +11,8 @@ int yylex(void); /* prototipo de la función de análisis léxico generada por f
 string tokname(int tok);
 /*char *tokname(inmt*/
 
-string toknames[] = {"ID", "CADE", "ENTERO","DESPLIEGA","SI",
-                     "OTRO","AND","OR","NOT","DIFER","IGUAL","ASIGNA"};
+string toknames[] = {"REGRESA", "DEF", "DESPLIEGA","SI","OTRO",
+                     "MIENTRAS"};
 
 
 string tokname(int tok) {

@@ -36,12 +36,16 @@ si 				{adjust(); return SI;}
 otro			{adjust(); return OTRO;}
 mientras		{adjust(); return MIENTRAS;}
 
+[a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
+[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+
+
 
 ","		  	  {adjust(); return ',';}
 "="			  {adjust(); return ASIGNA;}
 
-[a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
-[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+
+
 
 
 <<EOF>>       {printf("\nFin de Archivo encontrado."); exit(0); }
