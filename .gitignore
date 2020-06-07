@@ -1,0 +1,7 @@
+a.out
+lextest
+util.o
+driver.o
+lex.yy.o
+lex.yy.c
+errormsg.o
