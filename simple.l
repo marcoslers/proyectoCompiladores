@@ -29,9 +29,9 @@
 " "      	  {adjust(); continue;}
 \n       	  {adjust(); EM_newline(); continue;}
 ","		  	  {adjust(); return ',';}
-"="			  {adjust(); return ASIGNA}
+"="			  {adjust(); return ASIGNA;}
 despliega 	  {adjust(); return DESPLIEGA;}
-[a-z]+		  {adjust(); yylval.sval=String(yytext); return ID}
+[a-z]+		  {adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
 
