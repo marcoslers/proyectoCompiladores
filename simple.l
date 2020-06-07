@@ -39,15 +39,6 @@ mientras		{adjust(); return MIENTRAS;}
 [a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
-
-
-","		  	  {adjust(); return ',';}
-"="			  {adjust(); return ASIGNA;}
-
-
-
-
-
 <<EOF>>       {printf("\nFin de Archivo encontrado."); exit(0); }
 
 .             {adjust(); EM_error(EM_tokPos, "token ilegal\n");}

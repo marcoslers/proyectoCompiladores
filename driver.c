@@ -12,7 +12,7 @@ string tokname(int tok);
 /*char *tokname(inmt*/
 
 string toknames[] = {"REGRESA", "DEF", "DESPLIEGA","SI","OTRO",
-                     "MIENTRAS"};
+                     "MIENTRAS","ID","ENTERO"};
 
 
 string tokname(int tok) {
@@ -31,7 +31,8 @@ int main(int argc, char **argv) {
      printf("%c \n",tok);
      else
        switch(tok) {
-         case ID: case CADE:
+          //case CADE:
+         case ID: 
            printf("%10s %s\n",tokname(tok),yylval.sval);
            break;
          case ENTERO:
