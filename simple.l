@@ -39,7 +39,7 @@ mientras		{adjust(); return MIENTRAS;}
 ";"				{adjust(); return ';';}			
 "{"				{adjust(); return '{';}
 "}"				{adjust(); return '}';}
-"="				{adjust(); return '=';}
+"="				{adjust(); return ASIGNA;}
 "("				{adjust(); return '(';}
 ")"				{adjust(); return ')';}	
 ":"				{adjust(); return ':';}
@@ -47,17 +47,14 @@ mientras		{adjust(); return MIENTRAS;}
 "-"				{adjust(); return '-';}	
 "*"				{adjust(); return '*';}
 "/"				{adjust(); return '/';}
-
-
-==				{adjust(); return ':';}
-<>				{adjust(); return ':';}
-">"				{adjust(); return ':';}
-"<"				{adjust(); return ':';}
->=				{adjust(); return ':';}
-<=				{adjust(); return ':';}
-"&"				{adjust(); return ':';}
-"|"				{adjust(); return ':';}
-
+==				{adjust(); return IGUAL;}
+<>				{adjust(); return DIFERENTE;}
+">"				{adjust(); return MAYOR;}
+"<"				{adjust(); return MENOR;}
+>=				{adjust(); return MAYORIG;}
+<=				{adjust(); return MENORIG;}
+"&"				{adjust(); return AND;}
+"|"				{adjust(); return OR;}
 
 [a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}

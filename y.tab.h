@@ -11,8 +11,17 @@ typedef union {
 #define	SI 				261
 #define OTRO       		262
 #define MIENTRAS      	263
-#define ID              264
-#define ENTERO          265
+#define ASIGNA			264
+#define IGUAL			265
+#define DIFERENTE		266
+#define MAYOR			267
+#define MENOR           268
+#define MAYORIG         269
+#define MENORIG         270
+#define AND             271
+#define OR              272
+#define ID              273
+#define ENTERO          274
 extern YYSTYPE yylval;
 #endif
 
