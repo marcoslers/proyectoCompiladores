@@ -29,8 +29,11 @@
 " "      	  {adjust(); continue;}
 \n       	  {adjust(); EM_newline(); continue;}
 ","		  	  {adjust(); return ',';}
-[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+"="			  {adjust(); return ASIGNA}
 despliega 	  {adjust(); return DESPLIEGA;}
+[a-z]+		  {adjust(); yylval.sval=String(yytext); return ID}
+[0-9]+		  {adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+
 
 <<EOF>>       {printf("\nFin de Archivo encontrado."); exit(0); }
 

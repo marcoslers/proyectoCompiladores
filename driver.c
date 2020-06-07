@@ -12,7 +12,7 @@ string tokname(int tok);
 /*char *tokname(inmt*/
 
 string toknames[] = {"ID", "CADE", "ENTERO","DESPLIEGA","SI",
-                     "OTRO","AND","OR","NOT","DIFER","IGUAL"};
+                     "OTRO","AND","OR","NOT","DIFER","IGUAL","ASIGNA"};
 
 
 string tokname(int tok) {

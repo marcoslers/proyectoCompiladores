@@ -16,5 +16,8 @@ typedef union {
 #define NOT       266 
 #define DIFER     267 
 #define IGUAL     268 
+#define ASIGNA	  269
 extern YYSTYPE yylval;
 #endif
+
+
