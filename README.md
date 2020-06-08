@@ -1,2 +1,2 @@
 # proyectoCompiladores
-este proyecto corresponde a la meteria de compiladores de escom
+este proyecto corresponde a la materia de compiladores de escom
