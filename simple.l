@@ -58,8 +58,10 @@ mientras		{adjust(); return MIENTRAS;}
 "\&"			{adjust(); return AND;}
 "\|"			{adjust(); return OR;}
 
+['].*[']                           {adjust(); yylval.sval=String(yytext); return CADENA;}
 [a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  	{adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+
 
 \-{3}						BEGIN(comentario);
 <comentario>[^\-]*			{adjust(); continue;}		

@@ -22,6 +22,7 @@ typedef union {
 #define OR              272
 #define ID              273
 #define ENTERO          274
+#define CADENA          275
 extern YYSTYPE yylval;
 #endif
 
