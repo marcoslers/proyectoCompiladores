@@ -25,7 +25,6 @@
 %}
 
 %x comentario
-%s str
 
 %%
 
