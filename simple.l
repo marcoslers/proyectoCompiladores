@@ -30,6 +30,7 @@
 
 " "				{adjust(); continue;}
 \n       	  	{adjust(); EM_newline(); continue;}
+\t              {adjust(); EM_newline(); continue;} 
 
 regresa		   	{adjust(); return REGRESA;}
 def 			{adjust(); return DEF;}
