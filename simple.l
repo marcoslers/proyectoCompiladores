@@ -31,7 +31,7 @@
 " "				{adjust(); continue;}
 \n       	  	{adjust(); EM_newline(); continue;}
 \t              {adjust(); EM_newline(); continue;} 
-
+","				{adjust(); return ',';}
 regresa		   	{adjust(); return REGRESA;}
 def 			{adjust(); return DEF;}
 despliega 		{adjust(); return DESPLIEGA;}
@@ -59,14 +59,14 @@ mientras		{adjust(); return MIENTRAS;}
 "\&"			{adjust(); return AND;}
 "\|"			{adjust(); return OR;}
 
-['].*[']                           {adjust(); yylval.sval=String(yytext); return CADENA;}
-[a-zA-Z_]+[a-zA-Z0-9_]*			  {adjust(); yylval.sval=String(yytext); return ID;}
-[0-9]+		  	{adjust(); yylval.ival=atoi(yytext); return ENTERO;}
+['].*[']                    {adjust(); yylval.sval=String(yytext); return CADENA;}
+[a-zA-Z_]+[a-zA-Z0-9_]*		{adjust(); yylval.sval=String(yytext); return ID;}
+[0-9]+		  				{adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
 
-\-{3}						BEGIN(comentario);
+\-+{3}						BEGIN(comentario);
 <comentario>[^\-]*			{adjust(); continue;}		
-<comentario>\-{3}			{adjust(); BEGIN(INITIAL);};
+<comentario>\-+{3}			{adjust(); BEGIN(INITIAL);};
 
 <<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0); }
 
