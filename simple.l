@@ -24,14 +24,14 @@
 
 %}
 
-%x comentario
+%x	comentario str
 
 %%
 
 " "				{adjust(); continue;}
 \n       	  	{adjust(); EM_newline(); continue;}
 \t              {adjust(); EM_newline(); continue;} 
-","				{adjust(); return ',';}
+,				{adjust(); return ',';}
 regresa		   	{adjust(); return REGRESA;}
 def 			{adjust(); return DEF;}
 despliega 		{adjust(); return DESPLIEGA;}
@@ -39,35 +39,66 @@ si 				{adjust(); return SI;}
 otro			{adjust(); return OTRO;}
 mientras		{adjust(); return MIENTRAS;}
 
-";"				{adjust(); return ';';}			
-"\{"			{adjust(); return '{';}
-"\}"			{adjust(); return '}';}
-"="				{adjust(); return ASIGNA;}
-"\("			{adjust(); return '(';}
-"\)"			{adjust(); return ')';}	
-":"				{adjust(); return ':';}
-"\+"			{adjust(); return '+';}	
-"\-"			{adjust(); return '-';}	
-"*"				{adjust(); return '*';}
-"/"				{adjust(); return '/';}
+;				{adjust(); return ';';}			
+\{				{adjust(); return '{';}
+\}				{adjust(); return '}';}
+=				{adjust(); return ASIGNA;}
+\(				{adjust(); return '(';}
+\)				{adjust(); return ')';}	
+:				{adjust(); return ':';}
+\+				{adjust(); return '+';}	
+\-				{adjust(); return '-';}	
+\*				{adjust(); return '*';}
+\/				{adjust(); return '/';}
 ==				{adjust(); return IGUAL;}
 \<\>			{adjust(); return DIFERENTE;}
-"\>"			{adjust(); return MAYOR;}
-"\<"			{adjust(); return MENOR;}
+\>				{adjust(); return MAYOR;}
+\<				{adjust(); return MENOR;}
 \>=				{adjust(); return MAYORIG;}
 \<=				{adjust(); return MENORIG;}
-"\&"			{adjust(); return AND;}
-"\|"			{adjust(); return OR;}
+\&				{adjust(); return AND;}
+\|				{adjust(); return OR;}
 
-['].*[']                    {adjust(); yylval.sval=String(yytext); return CADENA;}
 [a-zA-Z_]+[a-zA-Z0-9_]*		{adjust(); yylval.sval=String(yytext); return ID;}
 [0-9]+		  				{adjust(); yylval.ival=atoi(yytext); return ENTERO;}
 
-
-\-+{3}						BEGIN(comentario);
+\-+{3}						{adjust();BEGIN(comentario);};
 <comentario>[^\-]*			{adjust(); continue;}		
 <comentario>\-+{3}			{adjust(); BEGIN(INITIAL);};
 
-<<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0); }
+'				{
+					adjust();
+					string_buf_ptr = string_buf; 
+					BEGIN(str);
+				}
+
+<str>'	 		{
+					adjust();
+					BEGIN(INITIAL); 
+					(*string_buf_ptr) = '\0';
+					return CADENA;
+				}
+
+<str>\n 		{	
+					adjust(); 
+					EM_error(EM_tokPos, "caracter invalido en cadena");
+					exit(0);
+				}				
+
+<str>\\n        {	
+					adjust();
+					yylval.sval=String(yytext);
+					*string_buf_ptr++='\n';
+				}
+
+<str>[^\n']+	{
+					adjust();
+					yylval.sval=String(yytext);
+					char *yptr = yytext;
+					while ( *yptr )
+						*string_buf_ptr++ = *yptr++;
+				}
+
+<<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0);}
 
 .             	{adjust(); EM_error(EM_tokPos, "token ilegal\n");}

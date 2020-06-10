@@ -6,10 +6,9 @@
 
 YYSTYPE yylval;
 
-int yylex(void); /* prototipo de la función de análisis léxico generada por flex */
+int yylex(void);
 
 string tokname(int tok);
-/*char *tokname(inmt*/
 
 string toknames[] = {"REGRESA", "DEF", "DESPLIEGA","SI","OTRO",
                      "MIENTRAS","ASIGNA","IGUAL","DIFERENTE","MAYOR",
@@ -32,16 +31,19 @@ int main(int argc, char **argv) {
    else if(tok<=255)
      printf("%c \n",tok);
      else
-       switch(tok) {
-          //case CADE:
-         case ID: 
-           printf("%10s %s\n",tokname(tok),yylval.sval);
-           break;
-         case ENTERO:
-           printf("%10s %d\n",tokname(tok),yylval.ival);
-           break;
-         default:
-           printf("%10s\n",tokname(tok));
+        switch(tok) {
+          case ENTERO:
+            printf("%10s %d\n",tokname(tok),yylval.ival);
+            break;
+          case ID: 
+            printf("%10s %s\n",tokname(tok),yylval.sval);
+            break;
+          case CADENA: 
+            printf("%10s %s\n",tokname(tok),yylval.sval);
+            break;
+          default:
+            printf("%10s\n",tokname(tok));
+            break;
        }
  }
  return 0;
