@@ -87,11 +87,25 @@ mientras		{adjust(); return MIENTRAS;}
 
 <str>\\n        {	
 					adjust();
-					yylval.sval=String(yytext);
 					*string_buf_ptr++='\n';
 				}
 
-<str>[^\n']+	{
+<str>\\t 		{
+					adjust();
+					*string_buf_ptr++='\t';
+				}
+
+<str>\\'		{
+					adjust();
+					*string_buf_ptr++='\'';
+				}
+
+<str>\\\		{
+					adjust();
+					*string_buf_ptr++='\\';
+				}
+
+<str>[^\\\n']+	{
 					adjust();
 					yylval.sval=String(yytext);
 					char *yptr = yytext;
