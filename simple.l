@@ -66,57 +66,68 @@ mientras		{adjust(); return MIENTRAS;}
 <comentario>[^\-]*			{adjust(); continue;}		
 <comentario>\-+{3}			{adjust(); BEGIN(INITIAL);};
 
-'				{
-					adjust();
-					string_buf_ptr = string_buf; 
-					BEGIN(str);
-				}
+'					{
+						adjust();
+						string_buf_ptr = string_buf; 
+						BEGIN(str);
+					}
 
-<str>'	 		{
-					adjust();
-					BEGIN(INITIAL); 
-					(*string_buf_ptr) = '\0';
-					printf("%s\n",string_buf);
-					return CADENA;
-				}
+<str>'	 			{
+						adjust();
+						BEGIN(INITIAL); 
+						(*string_buf_ptr) = '\0';
+						printf("%s\n",string_buf);
+						return CADENA;
+					}
 
-<str>\n 		{	
-					EM_error(EM_tokPos, "salto de linea en cadena invalido\n");
-					exit(0);
-				}
+<str>\n 			{	
+						EM_error(EM_tokPos, "salto de linea en cadena invalido\n");
+					}
 
-<str>\\[^'nt\\]*  {	
-					EM_error(EM_tokPos, "secuencia de escape invalida\n");
-					exit(0);
-				}
 
-<str>\\n        {	
-					adjust();
-					*string_buf_ptr++='\n';
-				}
+<str>\\n        	{	
+						adjust();
+						*string_buf_ptr++='\n';
+					}
 
-<str>\\t 		{
-					adjust();
-					*string_buf_ptr++='\t';
-				}
+<str>\\t 			{
+						adjust();
+						*string_buf_ptr++='\t';
+					}
 
-<str>\\' 		{
-					adjust();
-					*string_buf_ptr++='\'';
-				}	
+<str>\\' 			{
+						adjust();
+						*string_buf_ptr++='\'';
+					}	
 
-<str>\\\\ 		{
-					adjust();
-					*string_buf_ptr++='\\';
-				}	
+<str>\\\\ 			{
+						adjust();
+						*string_buf_ptr++='\\';
+					}	
 
-<str>[^\\'\n]+	{
-					adjust();
-					yylval.sval=String(yytext);
-					char *yptr = yytext;
-					while ( *yptr )
-						*string_buf_ptr++ = *yptr++;
-				}
+<str>\\[0-7]{1,3}	{
+						adjust();
+
+						int resultado;
+						(void) sscanf( yytext + 1, "%o", &resultado );
+						if ( resultado > 0xff )
+							EM_error(EM_tokPos, "secuencia en octal invalida\n");
+						*string_buf_ptr++ = resultado;
+					}
+
+
+<str>[^\\'\n]+		{
+						adjust();
+						yylval.sval=String(yytext);
+						char *yptr = yytext;
+						while ( *yptr )
+							*string_buf_ptr++ = *yptr++;
+					}
+
+
+<str>\\[^'nt\\0-7]* {	
+						EM_error(EM_tokPos, "secuencia de escape invalida\n");
+					}	
 
 <<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0);}
 
