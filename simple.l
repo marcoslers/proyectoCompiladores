@@ -76,14 +76,19 @@ mientras		{adjust(); return MIENTRAS;}
 					adjust();
 					BEGIN(INITIAL); 
 					(*string_buf_ptr) = '\0';
+					printf("%s\n",string_buf);
 					return CADENA;
 				}
 
 <str>\n 		{	
-					adjust(); 
-					EM_error(EM_tokPos, "caracter invalido en cadena");
+					EM_error(EM_tokPos, "salto de linea en cadena invalido\n");
 					exit(0);
-				}				
+				}
+
+<str>\\[^'nt\\]*  {	
+					EM_error(EM_tokPos, "secuencia de escape invalida\n");
+					exit(0);
+				}
 
 <str>\\n        {	
 					adjust();
@@ -95,17 +100,17 @@ mientras		{adjust(); return MIENTRAS;}
 					*string_buf_ptr++='\t';
 				}
 
-<str>\\'		{
+<str>\\' 		{
 					adjust();
 					*string_buf_ptr++='\'';
-				}
+				}	
 
-<str>\\\		{
+<str>\\\\ 		{
 					adjust();
 					*string_buf_ptr++='\\';
-				}
+				}	
 
-<str>[^\\\n']+	{
+<str>[^\\'\n]+	{
 					adjust();
 					yylval.sval=String(yytext);
 					char *yptr = yytext;
