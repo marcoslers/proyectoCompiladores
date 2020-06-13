@@ -77,7 +77,6 @@ mientras		{adjust(); return MIENTRAS;}
 						adjust();
 						BEGIN(INITIAL); 
 						(*string_buf_ptr) = '\0';
-						printf("%s\n",string_buf);
 						return CADENA;
 					}
 
@@ -128,6 +127,8 @@ mientras		{adjust(); return MIENTRAS;}
 
 <str>\\[^'nt\\0-7]* {	
 						EM_error(EM_tokPos, "secuencia de escape invalida\n");
-					}	
+					}
+
+<<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0);}	
 
 .             	{adjust(); EM_error(EM_tokPos, "token ilegal\n");}
