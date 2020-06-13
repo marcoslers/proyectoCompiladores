@@ -6,3 +6,6 @@ lex.yy.o
 lex.yy.c
 errormsg.o
 ej1.simple
+parsetst
+parsetst.o
+y.tab.o
