@@ -5,3 +5,4 @@ driver.o
 lex.yy.o
 lex.yy.c
 errormsg.o
+ej1.simple
