@@ -5,3 +5,6 @@ driver.o
 lex.yy.o
 lex.yy.c
 errormsg.o
+parsetst
+parsetst.o
+y.tab.o
