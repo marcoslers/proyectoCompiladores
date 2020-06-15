@@ -16,30 +16,37 @@ void yyerror(char *s)
 }
 %}
 
-%token  ENTERO
-%token  DESPLIEGA
-%nonassoc  SI
-%nonassoc  OTRO
-
 %union{
   int pos;
    int ival;
    string sval;
 };
-        
-%start program
 
+%token ENTERO
+%token  DESPLIEGA
+%nonassoc  SI
+%nonassoc  OTRO
+
+%left '*' '/'
+%left '+' '-'
+
+        
 /* A continuación la gramática */
                                  
 %%
 
-program: sent
+program:    sent
 
-sent: DESPLIEGA '(' exp ')'
+sent:   DESPLIEGA '(' exp ')'
     | SI '(' exp ')' sent %prec SI
     | SI '(' exp ')' sent OTRO sent
+    |exp ';'
     ;
-
+    
 exp: ENTERO
-   ;
+    | exp '-' exp 
+    | exp '*' exp
+    | exp '+' exp
+    | exp '/' exp
+    ;
 

@@ -129,6 +129,4 @@ mientras		{adjust(); return MIENTRAS;}
 						EM_error(EM_tokPos, "secuencia de escape invalida\n");
 					}
 
-<<EOF>>       	{printf("Fin de Archivo encontrado.\n"); exit(0);}	
-
 .             	{adjust(); EM_error(EM_tokPos, "token ilegal\n");}
