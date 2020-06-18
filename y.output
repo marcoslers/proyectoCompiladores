@@ -1,0 +1,778 @@
+Terminales no usados en la gramática
+
+    DESPLIEGA
+    CADENA
+    '*'
+    '/'
+    '+'
+    '-'
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 program: INICIO
+
+    2 INICIO: COMENTARIO DEFI FUNCI
+    3       | DEFI FUNCI
+
+    4 COMENTARIO: COMENTA
+
+    5 DEFI: DEFINI
+    6     | DEFINI DEFI
+
+    7 DEFINI: ID '=' ENTERO ';'
+
+    8 FUNCI: DEF ID '(' ID ')' ':' ID '{' EXPRESIONES '}'
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA ID ';'
+
+   10 EVALUAR: OPE
+   11        | EVALUAR AND EVALUAR
+   12        | EVALUAR OR EVALUAR
+
+   13 OPE: ID MAYOR ENTERO
+   14    | ID MENOR ENTERO
+   15    | ID IGUAL ENTERO
+   16    | ID DIFERENTE ENTERO
+   17    | ID MENORIG ENTERO
+   18    | ID MAYORIG ENTERO
+   19    | ENTERO MAYOR ID
+   20    | ENTERO MENOR ID
+   21    | ENTERO IGUAL ID
+   22    | ENTERO DIFERENTE ID
+   23    | ENTERO MENORIG ID
+   24    | ENTERO MAYORIG ID
+   25    | ID MAYOR ID
+   26    | ID MENOR ID
+   27    | ID IGUAL ID
+   28    | ID DIFERENTE ID
+   29    | ID MENORIG ID
+   30    | ID MAYORIG ID
+
+   31 EXPREM: MIENTRAS '(' OPE ')' '{' '}'
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    '(' (40) 8 31
+    ')' (41) 8 31
+    '*' (42)
+    '+' (43)
+    '-' (45)
+    '/' (47)
+    ':' (58) 8
+    ';' (59) 7 9
+    '=' (61) 7
+    '{' (123) 8 31
+    '}' (125) 8 31
+    error (256)
+    ENTERO (258) 7 9 13 14 15 16 17 18 19 20 21 22 23 24
+    DESPLIEGA (259)
+    SI (260) 9
+    OTRO (261) 9
+    REGRESA (262) 9
+    DEF (263) 8
+    MIENTRAS (264) 31
+    IGUAL (265) 15 21 27
+    DIFERENTE (266) 16 22 28
+    MAYOR (267) 13 19 25
+    MENOR (268) 14 20 26
+    MAYORIG (269) 18 24 30
+    MENORIG (270) 17 23 29
+    AND (271) 11
+    OR (272) 12
+    ID (273) 7 8 9 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+    CADENA (274)
+    COMENTA (275) 4
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (32)
+        on left: 0
+    program (33)
+        on left: 1
+        on right: 0
+    INICIO (34)
+        on left: 2 3
+        on right: 1
+    COMENTARIO (35)
+        on left: 4
+        on right: 2
+    DEFI (36)
+        on left: 5 6
+        on right: 2 3 6 9
+    DEFINI (37)
+        on left: 7
+        on right: 5 6
+    FUNCI (38)
+        on left: 8
+        on right: 2 3
+    EXPRESIONES (39)
+        on left: 9
+        on right: 8
+    EVALUAR (40)
+        on left: 10 11 12
+        on right: 9 11 12
+    OPE (41)
+        on left: 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+        on right: 10 31
+    EXPREM (42)
+        on left: 31
+        on right: 9
+
+
+Estado 0
+
+    0 $accept: . program $end
+
+    ID       desplazar e ir al estado 1
+    COMENTA  desplazar e ir al estado 2
+
+    program     ir al estado 3
+    INICIO      ir al estado 4
+    COMENTARIO  ir al estado 5
+    DEFI        ir al estado 6
+    DEFINI      ir al estado 7
+
+
+Estado 1
+
+    7 DEFINI: ID . '=' ENTERO ';'
+
+    '='  desplazar e ir al estado 8
+
+
+Estado 2
+
+    4 COMENTARIO: COMENTA .
+
+    $default  reduce usando la regla 4 (COMENTARIO)
+
+
+Estado 3
+
+    0 $accept: program . $end
+
+    $end  desplazar e ir al estado 9
+
+
+Estado 4
+
+    1 program: INICIO .
+
+    $default  reduce usando la regla 1 (program)
+
+
+Estado 5
+
+    2 INICIO: COMENTARIO . DEFI FUNCI
+
+    ID  desplazar e ir al estado 1
+
+    DEFI    ir al estado 10
+    DEFINI  ir al estado 7
+
+
+Estado 6
+
+    3 INICIO: DEFI . FUNCI
+
+    DEF  desplazar e ir al estado 11
+
+    FUNCI  ir al estado 12
+
+
+Estado 7
+
+    5 DEFI: DEFINI .
+    6     | DEFINI . DEFI
+
+    ID  desplazar e ir al estado 1
+
+    $default  reduce usando la regla 5 (DEFI)
+
+    DEFI    ir al estado 13
+    DEFINI  ir al estado 7
+
+
+Estado 8
+
+    7 DEFINI: ID '=' . ENTERO ';'
+
+    ENTERO  desplazar e ir al estado 14
+
+
+Estado 9
+
+    0 $accept: program $end .
+
+    $default  aceptar
+
+
+Estado 10
+
+    2 INICIO: COMENTARIO DEFI . FUNCI
+
+    DEF  desplazar e ir al estado 11
+
+    FUNCI  ir al estado 15
+
+
+Estado 11
+
+    8 FUNCI: DEF . ID '(' ID ')' ':' ID '{' EXPRESIONES '}'
+
+    ID  desplazar e ir al estado 16
+
+
+Estado 12
+
+    3 INICIO: DEFI FUNCI .
+
+    $default  reduce usando la regla 3 (INICIO)
+
+
+Estado 13
+
+    6 DEFI: DEFINI DEFI .
+
+    $default  reduce usando la regla 6 (DEFI)
+
+
+Estado 14
+
+    7 DEFINI: ID '=' ENTERO . ';'
+
+    ';'  desplazar e ir al estado 17
+
+
+Estado 15
+
+    2 INICIO: COMENTARIO DEFI FUNCI .
+
+    $default  reduce usando la regla 2 (INICIO)
+
+
+Estado 16
+
+    8 FUNCI: DEF ID . '(' ID ')' ':' ID '{' EXPRESIONES '}'
+
+    '('  desplazar e ir al estado 18
+
+
+Estado 17
+
+    7 DEFINI: ID '=' ENTERO ';' .
+
+    $default  reduce usando la regla 7 (DEFINI)
+
+
+Estado 18
+
+    8 FUNCI: DEF ID '(' . ID ')' ':' ID '{' EXPRESIONES '}'
+
+    ID  desplazar e ir al estado 19
+
+
+Estado 19
+
+    8 FUNCI: DEF ID '(' ID . ')' ':' ID '{' EXPRESIONES '}'
+
+    ')'  desplazar e ir al estado 20
+
+
+Estado 20
+
+    8 FUNCI: DEF ID '(' ID ')' . ':' ID '{' EXPRESIONES '}'
+
+    ':'  desplazar e ir al estado 21
+
+
+Estado 21
+
+    8 FUNCI: DEF ID '(' ID ')' ':' . ID '{' EXPRESIONES '}'
+
+    ID  desplazar e ir al estado 22
+
+
+Estado 22
+
+    8 FUNCI: DEF ID '(' ID ')' ':' ID . '{' EXPRESIONES '}'
+
+    '{'  desplazar e ir al estado 23
+
+
+Estado 23
+
+    8 FUNCI: DEF ID '(' ID ')' ':' ID '{' . EXPRESIONES '}'
+
+    ID  desplazar e ir al estado 1
+
+    DEFI         ir al estado 24
+    DEFINI       ir al estado 7
+    EXPRESIONES  ir al estado 25
+
+
+Estado 24
+
+    9 EXPRESIONES: DEFI . SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA ID ';'
+
+    SI  desplazar e ir al estado 26
+
+
+Estado 25
+
+    8 FUNCI: DEF ID '(' ID ')' ':' ID '{' EXPRESIONES . '}'
+
+    '}'  desplazar e ir al estado 27
+
+
+Estado 26
+
+    9 EXPRESIONES: DEFI SI . EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA ID ';'
+
+    ENTERO  desplazar e ir al estado 28
+    ID      desplazar e ir al estado 29
+
+    EVALUAR  ir al estado 30
+    OPE      ir al estado 31
+
+
+Estado 27
+
+    8 FUNCI: DEF ID '(' ID ')' ':' ID '{' EXPRESIONES '}' .
+
+    $default  reduce usando la regla 8 (FUNCI)
+
+
+Estado 28
+
+   19 OPE: ENTERO . MAYOR ID
+   20    | ENTERO . MENOR ID
+   21    | ENTERO . IGUAL ID
+   22    | ENTERO . DIFERENTE ID
+   23    | ENTERO . MENORIG ID
+   24    | ENTERO . MAYORIG ID
+
+    IGUAL      desplazar e ir al estado 32
+    DIFERENTE  desplazar e ir al estado 33
+    MAYOR      desplazar e ir al estado 34
+    MENOR      desplazar e ir al estado 35
+    MAYORIG    desplazar e ir al estado 36
+    MENORIG    desplazar e ir al estado 37
+
+
+Estado 29
+
+   13 OPE: ID . MAYOR ENTERO
+   14    | ID . MENOR ENTERO
+   15    | ID . IGUAL ENTERO
+   16    | ID . DIFERENTE ENTERO
+   17    | ID . MENORIG ENTERO
+   18    | ID . MAYORIG ENTERO
+   25    | ID . MAYOR ID
+   26    | ID . MENOR ID
+   27    | ID . IGUAL ID
+   28    | ID . DIFERENTE ID
+   29    | ID . MENORIG ID
+   30    | ID . MAYORIG ID
+
+    IGUAL      desplazar e ir al estado 38
+    DIFERENTE  desplazar e ir al estado 39
+    MAYOR      desplazar e ir al estado 40
+    MENOR      desplazar e ir al estado 41
+    MAYORIG    desplazar e ir al estado 42
+    MENORIG    desplazar e ir al estado 43
+
+
+Estado 30
+
+    9 EXPRESIONES: DEFI SI EVALUAR . REGRESA ENTERO ';' OTRO EXPREM REGRESA ID ';'
+   11 EVALUAR: EVALUAR . AND EVALUAR
+   12        | EVALUAR . OR EVALUAR
+
+    REGRESA  desplazar e ir al estado 44
+    AND      desplazar e ir al estado 45
+    OR       desplazar e ir al estado 46
+
+
+Estado 31
+
+   10 EVALUAR: OPE .
+
+    $default  reduce usando la regla 10 (EVALUAR)
+
+
+Estado 32
+
+   21 OPE: ENTERO IGUAL . ID
+
+    ID  desplazar e ir al estado 47
+
+
+Estado 33
+
+   22 OPE: ENTERO DIFERENTE . ID
+
+    ID  desplazar e ir al estado 48
+
+
+Estado 34
+
+   19 OPE: ENTERO MAYOR . ID
+
+    ID  desplazar e ir al estado 49
+
+
+Estado 35
+
+   20 OPE: ENTERO MENOR . ID
+
+    ID  desplazar e ir al estado 50
+
+
+Estado 36
+
+   24 OPE: ENTERO MAYORIG . ID
+
+    ID  desplazar e ir al estado 51
+
+
+Estado 37
+
+   23 OPE: ENTERO MENORIG . ID
+
+    ID  desplazar e ir al estado 52
+
+
+Estado 38
+
+   15 OPE: ID IGUAL . ENTERO
+   27    | ID IGUAL . ID
+
+    ENTERO  desplazar e ir al estado 53
+    ID      desplazar e ir al estado 54
+
+
+Estado 39
+
+   16 OPE: ID DIFERENTE . ENTERO
+   28    | ID DIFERENTE . ID
+
+    ENTERO  desplazar e ir al estado 55
+    ID      desplazar e ir al estado 56
+
+
+Estado 40
+
+   13 OPE: ID MAYOR . ENTERO
+   25    | ID MAYOR . ID
+
+    ENTERO  desplazar e ir al estado 57
+    ID      desplazar e ir al estado 58
+
+
+Estado 41
+
+   14 OPE: ID MENOR . ENTERO
+   26    | ID MENOR . ID
+
+    ENTERO  desplazar e ir al estado 59
+    ID      desplazar e ir al estado 60
+
+
+Estado 42
+
+   18 OPE: ID MAYORIG . ENTERO
+   30    | ID MAYORIG . ID
+
+    ENTERO  desplazar e ir al estado 61
+    ID      desplazar e ir al estado 62
+
+
+Estado 43
+
+   17 OPE: ID MENORIG . ENTERO
+   29    | ID MENORIG . ID
+
+    ENTERO  desplazar e ir al estado 63
+    ID      desplazar e ir al estado 64
+
+
+Estado 44
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA . ENTERO ';' OTRO EXPREM REGRESA ID ';'
+
+    ENTERO  desplazar e ir al estado 65
+
+
+Estado 45
+
+   11 EVALUAR: EVALUAR AND . EVALUAR
+
+    ENTERO  desplazar e ir al estado 28
+    ID      desplazar e ir al estado 29
+
+    EVALUAR  ir al estado 66
+    OPE      ir al estado 31
+
+
+Estado 46
+
+   12 EVALUAR: EVALUAR OR . EVALUAR
+
+    ENTERO  desplazar e ir al estado 28
+    ID      desplazar e ir al estado 29
+
+    EVALUAR  ir al estado 67
+    OPE      ir al estado 31
+
+
+Estado 47
+
+   21 OPE: ENTERO IGUAL ID .
+
+    $default  reduce usando la regla 21 (OPE)
+
+
+Estado 48
+
+   22 OPE: ENTERO DIFERENTE ID .
+
+    $default  reduce usando la regla 22 (OPE)
+
+
+Estado 49
+
+   19 OPE: ENTERO MAYOR ID .
+
+    $default  reduce usando la regla 19 (OPE)
+
+
+Estado 50
+
+   20 OPE: ENTERO MENOR ID .
+
+    $default  reduce usando la regla 20 (OPE)
+
+
+Estado 51
+
+   24 OPE: ENTERO MAYORIG ID .
+
+    $default  reduce usando la regla 24 (OPE)
+
+
+Estado 52
+
+   23 OPE: ENTERO MENORIG ID .
+
+    $default  reduce usando la regla 23 (OPE)
+
+
+Estado 53
+
+   15 OPE: ID IGUAL ENTERO .
+
+    $default  reduce usando la regla 15 (OPE)
+
+
+Estado 54
+
+   27 OPE: ID IGUAL ID .
+
+    $default  reduce usando la regla 27 (OPE)
+
+
+Estado 55
+
+   16 OPE: ID DIFERENTE ENTERO .
+
+    $default  reduce usando la regla 16 (OPE)
+
+
+Estado 56
+
+   28 OPE: ID DIFERENTE ID .
+
+    $default  reduce usando la regla 28 (OPE)
+
+
+Estado 57
+
+   13 OPE: ID MAYOR ENTERO .
+
+    $default  reduce usando la regla 13 (OPE)
+
+
+Estado 58
+
+   25 OPE: ID MAYOR ID .
+
+    $default  reduce usando la regla 25 (OPE)
+
+
+Estado 59
+
+   14 OPE: ID MENOR ENTERO .
+
+    $default  reduce usando la regla 14 (OPE)
+
+
+Estado 60
+
+   26 OPE: ID MENOR ID .
+
+    $default  reduce usando la regla 26 (OPE)
+
+
+Estado 61
+
+   18 OPE: ID MAYORIG ENTERO .
+
+    $default  reduce usando la regla 18 (OPE)
+
+
+Estado 62
+
+   30 OPE: ID MAYORIG ID .
+
+    $default  reduce usando la regla 30 (OPE)
+
+
+Estado 63
+
+   17 OPE: ID MENORIG ENTERO .
+
+    $default  reduce usando la regla 17 (OPE)
+
+
+Estado 64
+
+   29 OPE: ID MENORIG ID .
+
+    $default  reduce usando la regla 29 (OPE)
+
+
+Estado 65
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO . ';' OTRO EXPREM REGRESA ID ';'
+
+    ';'  desplazar e ir al estado 68
+
+
+Estado 66
+
+   11 EVALUAR: EVALUAR . AND EVALUAR
+   11        | EVALUAR AND EVALUAR .
+   12        | EVALUAR . OR EVALUAR
+
+    OR  desplazar e ir al estado 46
+
+    AND  error (no asociativo)
+
+    $default  reduce usando la regla 11 (EVALUAR)
+
+
+Estado 67
+
+   11 EVALUAR: EVALUAR . AND EVALUAR
+   12        | EVALUAR . OR EVALUAR
+   12        | EVALUAR OR EVALUAR .
+
+    OR  error (no asociativo)
+
+    $default  reduce usando la regla 12 (EVALUAR)
+
+
+Estado 68
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' . OTRO EXPREM REGRESA ID ';'
+
+    OTRO  desplazar e ir al estado 69
+
+
+Estado 69
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO . EXPREM REGRESA ID ';'
+
+    MIENTRAS  desplazar e ir al estado 70
+
+    EXPREM  ir al estado 71
+
+
+Estado 70
+
+   31 EXPREM: MIENTRAS . '(' OPE ')' '{' '}'
+
+    '('  desplazar e ir al estado 72
+
+
+Estado 71
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM . REGRESA ID ';'
+
+    REGRESA  desplazar e ir al estado 73
+
+
+Estado 72
+
+   31 EXPREM: MIENTRAS '(' . OPE ')' '{' '}'
+
+    ENTERO  desplazar e ir al estado 28
+    ID      desplazar e ir al estado 29
+
+    OPE  ir al estado 74
+
+
+Estado 73
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA . ID ';'
+
+    ID  desplazar e ir al estado 75
+
+
+Estado 74
+
+   31 EXPREM: MIENTRAS '(' OPE . ')' '{' '}'
+
+    ')'  desplazar e ir al estado 76
+
+
+Estado 75
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA ID . ';'
+
+    ';'  desplazar e ir al estado 77
+
+
+Estado 76
+
+   31 EXPREM: MIENTRAS '(' OPE ')' . '{' '}'
+
+    '{'  desplazar e ir al estado 78
+
+
+Estado 77
+
+    9 EXPRESIONES: DEFI SI EVALUAR REGRESA ENTERO ';' OTRO EXPREM REGRESA ID ';' .
+
+    $default  reduce usando la regla 9 (EXPRESIONES)
+
+
+Estado 78
+
+   31 EXPREM: MIENTRAS '(' OPE ')' '{' . '}'
+
+    '}'  desplazar e ir al estado 79
+
+
+Estado 79
+
+   31 EXPREM: MIENTRAS '(' OPE ')' '{' '}' .
+
+    $default  reduce usando la regla 31 (EXPREM)

@@ -33,7 +33,7 @@
 \t              {adjust(); EM_newline(); continue;} 
 ,				{adjust(); return ',';}
 regresa		   	{adjust(); return REGRESA;}
-def 			{adjust(); return DEF;}
+def 			{adjust();return DEF;}
 despliega 		{adjust(); return DESPLIEGA;}
 si 				{adjust(); return SI;}
 otro			{adjust(); return OTRO;}
@@ -64,7 +64,7 @@ mientras		{adjust(); return MIENTRAS;}
 
 \-+{3}						{adjust();BEGIN(comentario);};
 <comentario>[^\-]*			{adjust(); continue;}		
-<comentario>\-+{3}			{adjust(); BEGIN(INITIAL);};
+<comentario>\-+{3}			{adjust(); BEGIN(INITIAL); yylval.sval=String(yytext); return COMENTA;};
 
 
 '					{
