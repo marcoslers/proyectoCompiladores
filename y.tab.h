@@ -98,9 +98,8 @@ union YYSTYPE
   int pos;
    int ival;
    string sval;
-   string cc;
 
-#line 104 "y.tab.h"
+#line 103 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

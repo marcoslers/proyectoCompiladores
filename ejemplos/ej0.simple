@@ -1,19 +1,18 @@
-------------------------------------------------
-   Segunda versión del programa que calcula 
-   la suma de los primeros N números enteros,
-   Ejemplifica el uso de funciones.
-------------------------------------------------
-
-n=5;
 
 def sumaN (n):entero{
     i=1;
     suma=0;
-        si n <=0 regresa 0;
-        otro
-                mientras (i <= n) {
+	si n <=0 regresa 0;
+	otro
+		mientras (i <= n) {
+      		suma=suma+i;
+      		i= i+1;
+      	}
+    regresa 0;  
+}
 
-        }
-    regresa suma;  
+{   
+    me=4;
+    hola
 }
 
