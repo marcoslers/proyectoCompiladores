@@ -64,7 +64,7 @@ mientras		{adjust(); return MIENTRAS;}
 
 \-+{3}						{adjust();BEGIN(comentario);};
 <comentario>[^\-]*			{adjust(); continue;}		
-<comentario>\-+{3}			{adjust(); BEGIN(INITIAL); yylval.sval=String(yytext); return COMENTA;};
+<comentario>\-+{3}			{adjust(); BEGIN(INITIAL); yylval.sval=String(yytext);};
 
 
 '					{

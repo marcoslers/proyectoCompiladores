@@ -65,8 +65,7 @@ extern int yydebug;
     AND = 271,
     OR = 272,
     ID = 273,
-    CADENA = 274,
-    COMENTA = 275
+    CADENA = 274
   };
 #endif
 /* Tokens.  */
@@ -87,7 +86,6 @@ extern int yydebug;
 #define OR 272
 #define ID 273
 #define CADENA 274
-#define COMENTA 275
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -99,7 +97,7 @@ union YYSTYPE
    int ival;
    string sval;
 
-#line 103 "y.tab.h"
+#line 101 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

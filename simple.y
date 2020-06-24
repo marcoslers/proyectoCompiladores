@@ -32,15 +32,13 @@ void yyerror(char *s)
 %nonassoc IGUAL
 %nonassoc DIFERENTE
 %nonassoc MAYOR
-%nonassoc MENOR
+%nonassoc MENOR 
 %nonassoc MAYORIG
 %nonassoc MENORIG
 %nonassoc AND
 %nonassoc OR
 %token ID
 %token CADENA 
-%token COMENTA
-
 %left '='
 %left '*' '/'
 %left '+' '-'
@@ -50,34 +48,33 @@ void yyerror(char *s)
 
 %%
 
-program: INICIO   
+program: inicio   
 
-INICIO: COMENTARIO SUMIDC FUNCI MENU | SUMIDC FUNCI MENU | SUMIDC MENU  | FUNCI MENU | MENU;
-COMENTARIO: COMENTA;
-FUNCI: DEF ID '(' ID ')' ':' ID '{' EXPRESIONES '}';
-EXPRESIONES: SUMIDC SENTEN REGRESA REG';';
-REG: SUMID | EXP;
-SUMIDC: SUMID ';' | SUMID ';' SUMIDC;
-SUMID: ID | SUMID '+' SUMID | SUMID '=' SUMID | SUMID '-' SUMID | SUMID '*' SUMID | SUMID '/' SUMID
-            | SUMID '+' ENTERO | SUMID '=' ENTERO | SUMID '-' ENTERO | SUMID '*' ENTERO | SUMID '/' ENTERO
+inicio: sumidc funci menu | sumidc menu  | funci menu | menu;
+funci: DEF ID '(' ID ')' ':' ID '{' expresiones '}';
+expresiones: sumidc senten REGRESA reg';';
+reg: sumid | exp;
+sumidc: sumid ';' | sumid ';' sumidc;
+sumid: ID | sumid '+' sumid | sumid '=' sumid | sumid '-' sumid | sumid '*' sumid | sumid '/' sumid
+            | sumid '+' ENTERO | sumid '=' ENTERO | sumid '-' ENTERO | sumid '*' ENTERO | sumid '/' ENTERO
             | ENTERO '+' ENTERO | ENTERO '=' ENTERO | ENTERO '-' ENTERO | ENTERO '*' ENTERO | ENTERO '/' ENTERO
-            | ENTERO '+' SUMID | ENTERO '=' SUMID | ENTERO '-' SUMID | ENTERO '*' SUMID | ENTERO '/' SUMID
-EXP: ENTERO | EXP '+' EXP | EXP '-' EXP | EXP '*' EXP | EXP '/' EXP;
-EVALUAR: OPE | EVALUAR AND EVALUAR | EVALUAR OR EVALUAR;
-OPE: ID MAYOR ENTERO | ID MENOR ENTERO | ID IGUAL ENTERO | ID DIFERENTE ENTERO | ID MENORIG ENTERO | ID MAYORIG ENTERO | 
+            | ENTERO '+' sumid | ENTERO '=' sumid | ENTERO '-' sumid | ENTERO '*' sumid | ENTERO '/' sumid
+exp: ENTERO | exp '+' exp | exp '-' exp | exp '*' exp | exp '/' exp;
+evaluar: ope | evaluar AND evaluar | evaluar OR evaluar;
+ope: ID MAYOR ENTERO | ID MENOR ENTERO | ID IGUAL ENTERO | ID DIFERENTE ENTERO | ID MENORIG ENTERO | ID MAYORIG ENTERO | 
     ENTERO MAYOR ID | ENTERO MENOR ID | ENTERO IGUAL ID | ENTERO DIFERENTE ID | ENTERO MENORIG ID | ENTERO MAYORIG ID |
     ID MAYOR ID | ID MENOR ID | ID IGUAL ID | ID DIFERENTE ID | ID MENORIG ID | ID MAYORIG ID; 
-SENTEN: SSIMPLE | SSIMPLE SENTEN;
-SSIMPLE: SI EVALUAR | SI EVALUAR REGRESA REG ';' | SI EVALUAR SUMIDC REGRESA REG ';' |  SI EVALUAR MIENT REGRESA REG ';'
-        | SI EVALUAR SUMIDC MIENT REGRESA REG ';' | SI EVALUAR REGRESA REG ';' OTRO MIENT | SI EVALUAR REGRESA REG ';' OTRO SUMIDC 
-        | MIENT;
-MIENT: MIENTRAS  '(' OPE ')' '{' SUMIDC '}' | MIENTRAS  '(' OPE ')' '{' SENTEN '}' | MIENTRAS  '(' OPE ')' '{' SUMIDC SENTEN '}';
-MENU:'{' CONTENIDO '}';
-CONTENIDO: SUMIDC SENTEN PROTOTI IMP | SUMIDC PROTOTI SENTEN IMP | SUMIDC SENTEN  IMP | IMP;
-PROTOTI: PROTO | PROTO PROTOTI;
-PROTO: ID '(' REG ')' ';' | ID '=' ID '(' REG ')' ';';
-IMP: RECIMP | RECIMP IMP;
-RECIMP:DESPLIEGA '(' CADENA ')' ';'| DESPLIEGA '(' ID ')' ';';
+senten: ssimple | ssimple senten;
+ssimple: SI evaluar | SI evaluar REGRESA reg ';' | SI evaluar sumidc REGRESA reg ';' |  SI evaluar mient REGRESA reg ';'
+        | SI evaluar sumidc mient REGRESA reg ';' | SI evaluar REGRESA reg ';' OTRO mient | SI evaluar REGRESA reg ';' OTRO sumidc 
+        | mient;
+mient: MIENTRAS  '(' ope ')' '{' sumidc '}' | MIENTRAS  '(' ope ')' '{' senten '}' | MIENTRAS  '(' ope ')' '{' sumidc senten '}';
+menu:'{' contenido'}';
+contenido: sumidc senten prototi imp | sumidc prototi senten imp | sumidc senten  imp | imp; 
+prototi: proto | proto prototi;
+proto: ID '(' reg ')' ';' | ID '=' ID '(' reg ')' ';';
+imp: recimp | recimp imp;
+recimp:DESPLIEGA '(' CADENA ')' ';'| DESPLIEGA '(' ID ')' ';';
 
 
 
