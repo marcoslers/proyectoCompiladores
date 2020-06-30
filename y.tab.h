@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.5.3.  */
+/* A Bison parser, made by GNU Bison 3.6.3.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
@@ -44,31 +45,39 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ENTERO = 258,
-    DESPLIEGA = 259,
-    SI = 260,
-    OTRO = 261,
-    REGRESA = 262,
-    DEF = 263,
-    MIENTRAS = 264,
-    IGUAL = 265,
-    DIFERENTE = 266,
-    MAYOR = 267,
-    MENOR = 268,
-    MAYORIG = 269,
-    MENORIG = 270,
-    AND = 271,
-    OR = 272,
-    ID = 273,
-    CADENA = 274
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    ENTERO = 258,                  /* ENTERO  */
+    DESPLIEGA = 259,               /* DESPLIEGA  */
+    SI = 260,                      /* SI  */
+    OTRO = 261,                    /* OTRO  */
+    REGRESA = 262,                 /* REGRESA  */
+    DEF = 263,                     /* DEF  */
+    MIENTRAS = 264,                /* MIENTRAS  */
+    IGUAL = 265,                   /* IGUAL  */
+    DIFERENTE = 266,               /* DIFERENTE  */
+    MAYOR = 267,                   /* MAYOR  */
+    MENOR = 268,                   /* MENOR  */
+    MAYORIG = 269,                 /* MAYORIG  */
+    MENORIG = 270,                 /* MENORIG  */
+    AND = 271,                     /* AND  */
+    OR = 272,                      /* OR  */
+    ID = 273,                      /* ID  */
+    CADENA = 274                   /* CADENA  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
+/* Token kinds.  */
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
 #define ENTERO 258
 #define DESPLIEGA 259
 #define SI 260
@@ -97,7 +106,7 @@ union YYSTYPE
    int ival;
    string sval;
 
-#line 101 "y.tab.h"
+#line 110 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

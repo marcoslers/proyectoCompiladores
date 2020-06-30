@@ -1,0 +1,1769 @@
+Gramática
+
+    0 $accept: program $end
+
+    1 program: sent
+
+    2 sent: funcion_recurs_asignacion funcion_recurs menu
+    3     | funcion_recurs menu
+    4     | menu
+
+    5 funcion_recurs_asignacion: recursivo_asignacion
+    6                          | recursivo_asignacion funcion_recurs_asignacion
+
+    7 recursivo_asignacion: ID '=' exp ';'
+
+    8 exp: ENTERO
+    9    | ID
+   10    | exp '*' exp
+   11    | exp '-' exp
+   12    | exp '/' exp
+   13    | exp '+' exp
+   14    | exp IGUAL exp
+   15    | exp DIFERENTE exp
+   16    | exp MAYOR exp
+   17    | exp MENOR exp
+   18    | exp MAYORIG exp
+   19    | exp MENORIG exp
+
+   20 funcion_recurs: seccion_funciones
+   21               | seccion_funciones funcion_recurs
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+   24 instrucciones: funcion_recurs_asignacion recurs_sentencias
+   25              | recurs_sentencias
+
+   26 recurs_sentencias: recursivo_sentencia
+   27                  | recursivo_sentencia recurs_sentencias
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones '}'
+   29                    | SI '(' funcion_evaluacion ')' '{' instrucciones REGRESA exp ';' '}'
+   30                    | SI '(' funcion_evaluacion ')' '{' REGRESA exp ';' '}'
+   31                    | SI '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+   32                    | OTRO '{' funcion_recurs_asignacion '}'
+   33                    | OTRO '{' instrucciones '}'
+   34                    | MIENTRAS '(' funcion_evaluacion ')' '{' instrucciones '}'
+   35                    | MIENTRAS '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+
+   36 funcion_evaluacion: recusivo_evaluacion
+   37                   | recusivo_evaluacion funcion_evaluacion
+
+   38 recusivo_evaluacion: exp
+   39                    | exp AND exp
+   40                    | exp AND exp AND
+   41                    | exp AND exp OR
+   42                    | exp OR exp
+   43                    | exp OR exp OR
+   44                    | exp OR exp AND
+
+   45 menu: '{' contendio_menu '}'
+
+   46 contendio_menu: recursivo_asignacion funcion_recurs_prototipo recurs_sentencias funcion_recurs_imprimir
+   47               | recursivo_asignacion recurs_sentencias funcion_recurs_prototipo funcion_recurs_imprimir
+   48               | recursivo_asignacion funcion_recurs_prototipo funcion_recurs_imprimir
+   49               | recursivo_asignacion recurs_sentencias funcion_recurs_imprimir
+   50               | recursivo_asignacion funcion_recurs_imprimir
+   51               | funcion_recurs_imprimir
+
+   52 funcion_recurs_prototipo: recursivo_prototipo
+   53                         | recursivo_prototipo funcion_recurs_prototipo
+
+   54 recursivo_prototipo: ID '=' ID '(' exp ')' ';'
+
+   55 funcion_recurs_imprimir: imprimir
+   56                        | imprimir funcion_recurs_imprimir
+
+   57 imprimir: DESPLIEGA '(' CADENA ')' ';'
+   58         | DESPLIEGA '(' ID ')' ';'
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    '(' (40) 22 23 28 29 30 31 34 35 54 57 58
+    ')' (41) 22 23 28 29 30 31 34 35 54 57 58
+    '*' (42) 10
+    '+' (43) 13
+    '-' (45) 11
+    '/' (47) 12
+    ':' (58) 22 23
+    ';' (59) 7 22 23 29 30 54 57 58
+    '=' (61) 7 54
+    '{' (123) 22 23 28 29 30 31 32 33 34 35 45
+    '}' (125) 22 23 28 29 30 31 32 33 34 35 45
+    error (256)
+    ENTERO (258) 8
+    DESPLIEGA (259) 57 58
+    SI (260) 28 29 30 31
+    OTRO (261) 32 33
+    REGRESA (262) 22 23 29 30
+    DEF (263) 22 23
+    MIENTRAS (264) 34 35
+    IGUAL (265) 14
+    DIFERENTE (266) 15
+    MAYOR (267) 16
+    MENOR (268) 17
+    MAYORIG (269) 18
+    MENORIG (270) 19
+    AND (271) 39 40 41 44
+    OR (272) 41 42 43 44
+    ID (273) 7 9 22 23 54 58
+    CADENA (274) 57
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (31)
+        on left: 0
+    program (32)
+        on left: 1
+        on right: 0
+    sent (33)
+        on left: 2 3 4
+        on right: 1
+    funcion_recurs_asignacion (34)
+        on left: 5 6
+        on right: 2 6 23 24 31 32 35
+    recursivo_asignacion (35)
+        on left: 7
+        on right: 5 6 46 47 48 49 50
+    exp (36)
+        on left: 8 9 10 11 12 13 14 15 16 17 18 19
+        on right: 7 10 11 12 13 14 15 16 17 18 19 22 23 29 30 38 39 40 41 42 43 44 54
+    funcion_recurs (37)
+        on left: 20 21
+        on right: 2 3 21
+    seccion_funciones (38)
+        on left: 22 23
+        on right: 20 21
+    instrucciones (39)
+        on left: 24 25
+        on right: 22 28 29 33 34
+    recurs_sentencias (40)
+        on left: 26 27
+        on right: 24 25 27 46 47 49
+    recursivo_sentencia (41)
+        on left: 28 29 30 31 32 33 34 35
+        on right: 26 27
+    funcion_evaluacion (42)
+        on left: 36 37
+        on right: 28 29 30 31 34 35 37
+    recusivo_evaluacion (43)
+        on left: 38 39 40 41 42 43 44
+        on right: 36 37
+    menu (44)
+        on left: 45
+        on right: 2 3 4
+    contendio_menu (45)
+        on left: 46 47 48 49 50 51
+        on right: 45
+    funcion_recurs_prototipo (46)
+        on left: 52 53
+        on right: 46 47 48 53
+    recursivo_prototipo (47)
+        on left: 54
+        on right: 52 53
+    funcion_recurs_imprimir (48)
+        on left: 55 56
+        on right: 46 47 48 49 50 51 56
+    imprimir (49)
+        on left: 57 58
+        on right: 55 56
+
+
+Estado 0
+
+    0 $accept: . program $end
+
+    DEF  desplazar e ir al estado 1
+    ID   desplazar e ir al estado 2
+    '{'  desplazar e ir al estado 3
+
+    program                    ir al estado 4
+    sent                       ir al estado 5
+    funcion_recurs_asignacion  ir al estado 6
+    recursivo_asignacion       ir al estado 7
+    funcion_recurs             ir al estado 8
+    seccion_funciones          ir al estado 9
+    menu                       ir al estado 10
+
+
+Estado 1
+
+   22 seccion_funciones: DEF . ID '(' ID ')' ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF . ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    ID  desplazar e ir al estado 11
+
+
+Estado 2
+
+    7 recursivo_asignacion: ID . '=' exp ';'
+
+    '='  desplazar e ir al estado 12
+
+
+Estado 3
+
+   45 menu: '{' . contendio_menu '}'
+
+    DESPLIEGA  desplazar e ir al estado 13
+    ID         desplazar e ir al estado 2
+
+    recursivo_asignacion     ir al estado 14
+    contendio_menu           ir al estado 15
+    funcion_recurs_imprimir  ir al estado 16
+    imprimir                 ir al estado 17
+
+
+Estado 4
+
+    0 $accept: program . $end
+
+    $end  desplazar e ir al estado 18
+
+
+Estado 5
+
+    1 program: sent .
+
+    $default  reduce usando la regla 1 (program)
+
+
+Estado 6
+
+    2 sent: funcion_recurs_asignacion . funcion_recurs menu
+
+    DEF  desplazar e ir al estado 1
+
+    funcion_recurs     ir al estado 19
+    seccion_funciones  ir al estado 9
+
+
+Estado 7
+
+    5 funcion_recurs_asignacion: recursivo_asignacion .
+    6                          | recursivo_asignacion . funcion_recurs_asignacion
+
+    ID  desplazar e ir al estado 2
+
+    $default  reduce usando la regla 5 (funcion_recurs_asignacion)
+
+    funcion_recurs_asignacion  ir al estado 20
+    recursivo_asignacion       ir al estado 7
+
+
+Estado 8
+
+    3 sent: funcion_recurs . menu
+
+    '{'  desplazar e ir al estado 3
+
+    menu  ir al estado 21
+
+
+Estado 9
+
+   20 funcion_recurs: seccion_funciones .
+   21               | seccion_funciones . funcion_recurs
+
+    DEF  desplazar e ir al estado 1
+
+    $default  reduce usando la regla 20 (funcion_recurs)
+
+    funcion_recurs     ir al estado 22
+    seccion_funciones  ir al estado 9
+
+
+Estado 10
+
+    4 sent: menu .
+
+    $default  reduce usando la regla 4 (sent)
+
+
+Estado 11
+
+   22 seccion_funciones: DEF ID . '(' ID ')' ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID . '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    '('  desplazar e ir al estado 23
+
+
+Estado 12
+
+    7 recursivo_asignacion: ID '=' . exp ';'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 26
+
+
+Estado 13
+
+   57 imprimir: DESPLIEGA . '(' CADENA ')' ';'
+   58         | DESPLIEGA . '(' ID ')' ';'
+
+    '('  desplazar e ir al estado 27
+
+
+Estado 14
+
+   46 contendio_menu: recursivo_asignacion . funcion_recurs_prototipo recurs_sentencias funcion_recurs_imprimir
+   47               | recursivo_asignacion . recurs_sentencias funcion_recurs_prototipo funcion_recurs_imprimir
+   48               | recursivo_asignacion . funcion_recurs_prototipo funcion_recurs_imprimir
+   49               | recursivo_asignacion . recurs_sentencias funcion_recurs_imprimir
+   50               | recursivo_asignacion . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+    SI         desplazar e ir al estado 28
+    OTRO       desplazar e ir al estado 29
+    MIENTRAS   desplazar e ir al estado 30
+    ID         desplazar e ir al estado 31
+
+    recurs_sentencias         ir al estado 32
+    recursivo_sentencia       ir al estado 33
+    funcion_recurs_prototipo  ir al estado 34
+    recursivo_prototipo       ir al estado 35
+    funcion_recurs_imprimir   ir al estado 36
+    imprimir                  ir al estado 17
+
+
+Estado 15
+
+   45 menu: '{' contendio_menu . '}'
+
+    '}'  desplazar e ir al estado 37
+
+
+Estado 16
+
+   51 contendio_menu: funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 51 (contendio_menu)
+
+
+Estado 17
+
+   55 funcion_recurs_imprimir: imprimir .
+   56                        | imprimir . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+
+    $default  reduce usando la regla 55 (funcion_recurs_imprimir)
+
+    funcion_recurs_imprimir  ir al estado 38
+    imprimir                 ir al estado 17
+
+
+Estado 18
+
+    0 $accept: program $end .
+
+    $default  aceptar
+
+
+Estado 19
+
+    2 sent: funcion_recurs_asignacion funcion_recurs . menu
+
+    '{'  desplazar e ir al estado 3
+
+    menu  ir al estado 39
+
+
+Estado 20
+
+    6 funcion_recurs_asignacion: recursivo_asignacion funcion_recurs_asignacion .
+
+    $default  reduce usando la regla 6 (funcion_recurs_asignacion)
+
+
+Estado 21
+
+    3 sent: funcion_recurs menu .
+
+    $default  reduce usando la regla 3 (sent)
+
+
+Estado 22
+
+   21 funcion_recurs: seccion_funciones funcion_recurs .
+
+    $default  reduce usando la regla 21 (funcion_recurs)
+
+
+Estado 23
+
+   22 seccion_funciones: DEF ID '(' . ID ')' ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' . ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    ID  desplazar e ir al estado 40
+
+
+Estado 24
+
+    8 exp: ENTERO .
+
+    $default  reduce usando la regla 8 (exp)
+
+
+Estado 25
+
+    9 exp: ID .
+
+    $default  reduce usando la regla 9 (exp)
+
+
+Estado 26
+
+    7 recursivo_asignacion: ID '=' exp . ';'
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    ';'        desplazar e ir al estado 47
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+
+Estado 27
+
+   57 imprimir: DESPLIEGA '(' . CADENA ')' ';'
+   58         | DESPLIEGA '(' . ID ')' ';'
+
+    ID      desplazar e ir al estado 52
+    CADENA  desplazar e ir al estado 53
+
+
+Estado 28
+
+   28 recursivo_sentencia: SI . '(' funcion_evaluacion ')' '{' instrucciones '}'
+   29                    | SI . '(' funcion_evaluacion ')' '{' instrucciones REGRESA exp ';' '}'
+   30                    | SI . '(' funcion_evaluacion ')' '{' REGRESA exp ';' '}'
+   31                    | SI . '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+
+    '('  desplazar e ir al estado 54
+
+
+Estado 29
+
+   32 recursivo_sentencia: OTRO . '{' funcion_recurs_asignacion '}'
+   33                    | OTRO . '{' instrucciones '}'
+
+    '{'  desplazar e ir al estado 55
+
+
+Estado 30
+
+   34 recursivo_sentencia: MIENTRAS . '(' funcion_evaluacion ')' '{' instrucciones '}'
+   35                    | MIENTRAS . '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+
+    '('  desplazar e ir al estado 56
+
+
+Estado 31
+
+   54 recursivo_prototipo: ID . '=' ID '(' exp ')' ';'
+
+    '='  desplazar e ir al estado 57
+
+
+Estado 32
+
+   47 contendio_menu: recursivo_asignacion recurs_sentencias . funcion_recurs_prototipo funcion_recurs_imprimir
+   49               | recursivo_asignacion recurs_sentencias . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+    ID         desplazar e ir al estado 31
+
+    funcion_recurs_prototipo  ir al estado 58
+    recursivo_prototipo       ir al estado 35
+    funcion_recurs_imprimir   ir al estado 59
+    imprimir                  ir al estado 17
+
+
+Estado 33
+
+   26 recurs_sentencias: recursivo_sentencia .
+   27                  | recursivo_sentencia . recurs_sentencias
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+
+    $default  reduce usando la regla 26 (recurs_sentencias)
+
+    recurs_sentencias    ir al estado 60
+    recursivo_sentencia  ir al estado 33
+
+
+Estado 34
+
+   46 contendio_menu: recursivo_asignacion funcion_recurs_prototipo . recurs_sentencias funcion_recurs_imprimir
+   48               | recursivo_asignacion funcion_recurs_prototipo . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+    SI         desplazar e ir al estado 28
+    OTRO       desplazar e ir al estado 29
+    MIENTRAS   desplazar e ir al estado 30
+
+    recurs_sentencias        ir al estado 61
+    recursivo_sentencia      ir al estado 33
+    funcion_recurs_imprimir  ir al estado 62
+    imprimir                 ir al estado 17
+
+
+Estado 35
+
+   52 funcion_recurs_prototipo: recursivo_prototipo .
+   53                         | recursivo_prototipo . funcion_recurs_prototipo
+
+    ID  desplazar e ir al estado 31
+
+    $default  reduce usando la regla 52 (funcion_recurs_prototipo)
+
+    funcion_recurs_prototipo  ir al estado 63
+    recursivo_prototipo       ir al estado 35
+
+
+Estado 36
+
+   50 contendio_menu: recursivo_asignacion funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 50 (contendio_menu)
+
+
+Estado 37
+
+   45 menu: '{' contendio_menu '}' .
+
+    $default  reduce usando la regla 45 (menu)
+
+
+Estado 38
+
+   56 funcion_recurs_imprimir: imprimir funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 56 (funcion_recurs_imprimir)
+
+
+Estado 39
+
+    2 sent: funcion_recurs_asignacion funcion_recurs menu .
+
+    $default  reduce usando la regla 2 (sent)
+
+
+Estado 40
+
+   22 seccion_funciones: DEF ID '(' ID . ')' ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID . ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    ')'  desplazar e ir al estado 64
+
+
+Estado 41
+
+   14 exp: exp IGUAL . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 65
+
+
+Estado 42
+
+   15 exp: exp DIFERENTE . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 66
+
+
+Estado 43
+
+   16 exp: exp MAYOR . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 67
+
+
+Estado 44
+
+   17 exp: exp MENOR . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 68
+
+
+Estado 45
+
+   18 exp: exp MAYORIG . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 69
+
+
+Estado 46
+
+   19 exp: exp MENORIG . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 70
+
+
+Estado 47
+
+    7 recursivo_asignacion: ID '=' exp ';' .
+
+    $default  reduce usando la regla 7 (recursivo_asignacion)
+
+
+Estado 48
+
+   13 exp: exp '+' . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 71
+
+
+Estado 49
+
+   11 exp: exp '-' . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 72
+
+
+Estado 50
+
+   10 exp: exp '*' . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 73
+
+
+Estado 51
+
+   12 exp: exp '/' . exp
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 74
+
+
+Estado 52
+
+   58 imprimir: DESPLIEGA '(' ID . ')' ';'
+
+    ')'  desplazar e ir al estado 75
+
+
+Estado 53
+
+   57 imprimir: DESPLIEGA '(' CADENA . ')' ';'
+
+    ')'  desplazar e ir al estado 76
+
+
+Estado 54
+
+   28 recursivo_sentencia: SI '(' . funcion_evaluacion ')' '{' instrucciones '}'
+   29                    | SI '(' . funcion_evaluacion ')' '{' instrucciones REGRESA exp ';' '}'
+   30                    | SI '(' . funcion_evaluacion ')' '{' REGRESA exp ';' '}'
+   31                    | SI '(' . funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp                  ir al estado 77
+    funcion_evaluacion   ir al estado 78
+    recusivo_evaluacion  ir al estado 79
+
+
+Estado 55
+
+   32 recursivo_sentencia: OTRO '{' . funcion_recurs_asignacion '}'
+   33                    | OTRO '{' . instrucciones '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    ID        desplazar e ir al estado 2
+
+    funcion_recurs_asignacion  ir al estado 80
+    recursivo_asignacion       ir al estado 7
+    instrucciones              ir al estado 81
+    recurs_sentencias          ir al estado 82
+    recursivo_sentencia        ir al estado 33
+
+
+Estado 56
+
+   34 recursivo_sentencia: MIENTRAS '(' . funcion_evaluacion ')' '{' instrucciones '}'
+   35                    | MIENTRAS '(' . funcion_evaluacion ')' '{' funcion_recurs_asignacion '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp                  ir al estado 77
+    funcion_evaluacion   ir al estado 83
+    recusivo_evaluacion  ir al estado 79
+
+
+Estado 57
+
+   54 recursivo_prototipo: ID '=' . ID '(' exp ')' ';'
+
+    ID  desplazar e ir al estado 84
+
+
+Estado 58
+
+   47 contendio_menu: recursivo_asignacion recurs_sentencias funcion_recurs_prototipo . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+
+    funcion_recurs_imprimir  ir al estado 85
+    imprimir                 ir al estado 17
+
+
+Estado 59
+
+   49 contendio_menu: recursivo_asignacion recurs_sentencias funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 49 (contendio_menu)
+
+
+Estado 60
+
+   27 recurs_sentencias: recursivo_sentencia recurs_sentencias .
+
+    $default  reduce usando la regla 27 (recurs_sentencias)
+
+
+Estado 61
+
+   46 contendio_menu: recursivo_asignacion funcion_recurs_prototipo recurs_sentencias . funcion_recurs_imprimir
+
+    DESPLIEGA  desplazar e ir al estado 13
+
+    funcion_recurs_imprimir  ir al estado 86
+    imprimir                 ir al estado 17
+
+
+Estado 62
+
+   48 contendio_menu: recursivo_asignacion funcion_recurs_prototipo funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 48 (contendio_menu)
+
+
+Estado 63
+
+   53 funcion_recurs_prototipo: recursivo_prototipo funcion_recurs_prototipo .
+
+    $default  reduce usando la regla 53 (funcion_recurs_prototipo)
+
+
+Estado 64
+
+   22 seccion_funciones: DEF ID '(' ID ')' . ':' ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID ')' . ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    ':'  desplazar e ir al estado 87
+
+
+Estado 65
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   14    | exp IGUAL exp .
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+    IGUAL  error (no asociativo)
+
+    $default  reduce usando la regla 14 (exp)
+
+
+Estado 66
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   15    | exp DIFERENTE exp .
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    MAYOR    desplazar e ir al estado 43
+    MENOR    desplazar e ir al estado 44
+    MAYORIG  desplazar e ir al estado 45
+    MENORIG  desplazar e ir al estado 46
+    '+'      desplazar e ir al estado 48
+    '-'      desplazar e ir al estado 49
+    '*'      desplazar e ir al estado 50
+    '/'      desplazar e ir al estado 51
+
+    DIFERENTE  error (no asociativo)
+
+    $default  reduce usando la regla 15 (exp)
+
+
+Estado 67
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   16    | exp MAYOR exp .
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    MENOR    desplazar e ir al estado 44
+    MAYORIG  desplazar e ir al estado 45
+    MENORIG  desplazar e ir al estado 46
+    '+'      desplazar e ir al estado 48
+    '-'      desplazar e ir al estado 49
+    '*'      desplazar e ir al estado 50
+    '/'      desplazar e ir al estado 51
+
+    MAYOR  error (no asociativo)
+
+    $default  reduce usando la regla 16 (exp)
+
+
+Estado 68
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   17    | exp MENOR exp .
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    MAYORIG  desplazar e ir al estado 45
+    MENORIG  desplazar e ir al estado 46
+    '+'      desplazar e ir al estado 48
+    '-'      desplazar e ir al estado 49
+    '*'      desplazar e ir al estado 50
+    '/'      desplazar e ir al estado 51
+
+    MENOR  error (no asociativo)
+
+    $default  reduce usando la regla 17 (exp)
+
+
+Estado 69
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   18    | exp MAYORIG exp .
+   19    | exp . MENORIG exp
+
+    MENORIG  desplazar e ir al estado 46
+    '+'      desplazar e ir al estado 48
+    '-'      desplazar e ir al estado 49
+    '*'      desplazar e ir al estado 50
+    '/'      desplazar e ir al estado 51
+
+    MAYORIG  error (no asociativo)
+
+    $default  reduce usando la regla 18 (exp)
+
+
+Estado 70
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   19    | exp MENORIG exp .
+
+    '+'  desplazar e ir al estado 48
+    '-'  desplazar e ir al estado 49
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    MENORIG  error (no asociativo)
+
+    $default  reduce usando la regla 19 (exp)
+
+
+Estado 71
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   13    | exp '+' exp .
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 13 (exp)
+
+
+Estado 72
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   11    | exp '-' exp .
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    '*'  desplazar e ir al estado 50
+    '/'  desplazar e ir al estado 51
+
+    $default  reduce usando la regla 11 (exp)
+
+
+Estado 73
+
+   10 exp: exp . '*' exp
+   10    | exp '*' exp .
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    $default  reduce usando la regla 10 (exp)
+
+
+Estado 74
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   12    | exp '/' exp .
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+
+    $default  reduce usando la regla 12 (exp)
+
+
+Estado 75
+
+   58 imprimir: DESPLIEGA '(' ID ')' . ';'
+
+    ';'  desplazar e ir al estado 88
+
+
+Estado 76
+
+   57 imprimir: DESPLIEGA '(' CADENA ')' . ';'
+
+    ';'  desplazar e ir al estado 89
+
+
+Estado 77
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   38 recusivo_evaluacion: exp .
+   39                    | exp . AND exp
+   40                    | exp . AND exp AND
+   41                    | exp . AND exp OR
+   42                    | exp . OR exp
+   43                    | exp . OR exp OR
+   44                    | exp . OR exp AND
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    AND        desplazar e ir al estado 90
+    OR         desplazar e ir al estado 91
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+    $default  reduce usando la regla 38 (recusivo_evaluacion)
+
+
+Estado 78
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion . ')' '{' instrucciones '}'
+   29                    | SI '(' funcion_evaluacion . ')' '{' instrucciones REGRESA exp ';' '}'
+   30                    | SI '(' funcion_evaluacion . ')' '{' REGRESA exp ';' '}'
+   31                    | SI '(' funcion_evaluacion . ')' '{' funcion_recurs_asignacion '}'
+
+    ')'  desplazar e ir al estado 92
+
+
+Estado 79
+
+   36 funcion_evaluacion: recusivo_evaluacion .
+   37                   | recusivo_evaluacion . funcion_evaluacion
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    $default  reduce usando la regla 36 (funcion_evaluacion)
+
+    exp                  ir al estado 77
+    funcion_evaluacion   ir al estado 93
+    recusivo_evaluacion  ir al estado 79
+
+
+Estado 80
+
+   24 instrucciones: funcion_recurs_asignacion . recurs_sentencias
+   32 recursivo_sentencia: OTRO '{' funcion_recurs_asignacion . '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    '}'       desplazar e ir al estado 94
+
+    recurs_sentencias    ir al estado 95
+    recursivo_sentencia  ir al estado 33
+
+
+Estado 81
+
+   33 recursivo_sentencia: OTRO '{' instrucciones . '}'
+
+    '}'  desplazar e ir al estado 96
+
+
+Estado 82
+
+   25 instrucciones: recurs_sentencias .
+
+    $default  reduce usando la regla 25 (instrucciones)
+
+
+Estado 83
+
+   34 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion . ')' '{' instrucciones '}'
+   35                    | MIENTRAS '(' funcion_evaluacion . ')' '{' funcion_recurs_asignacion '}'
+
+    ')'  desplazar e ir al estado 97
+
+
+Estado 84
+
+   54 recursivo_prototipo: ID '=' ID . '(' exp ')' ';'
+
+    '('  desplazar e ir al estado 98
+
+
+Estado 85
+
+   47 contendio_menu: recursivo_asignacion recurs_sentencias funcion_recurs_prototipo funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 47 (contendio_menu)
+
+
+Estado 86
+
+   46 contendio_menu: recursivo_asignacion funcion_recurs_prototipo recurs_sentencias funcion_recurs_imprimir .
+
+    $default  reduce usando la regla 46 (contendio_menu)
+
+
+Estado 87
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' . ID '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID ')' ':' . ID '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    ID  desplazar e ir al estado 99
+
+
+Estado 88
+
+   58 imprimir: DESPLIEGA '(' ID ')' ';' .
+
+    $default  reduce usando la regla 58 (imprimir)
+
+
+Estado 89
+
+   57 imprimir: DESPLIEGA '(' CADENA ')' ';' .
+
+    $default  reduce usando la regla 57 (imprimir)
+
+
+Estado 90
+
+   39 recusivo_evaluacion: exp AND . exp
+   40                    | exp AND . exp AND
+   41                    | exp AND . exp OR
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 100
+
+
+Estado 91
+
+   42 recusivo_evaluacion: exp OR . exp
+   43                    | exp OR . exp OR
+   44                    | exp OR . exp AND
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 101
+
+
+Estado 92
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion ')' . '{' instrucciones '}'
+   29                    | SI '(' funcion_evaluacion ')' . '{' instrucciones REGRESA exp ';' '}'
+   30                    | SI '(' funcion_evaluacion ')' . '{' REGRESA exp ';' '}'
+   31                    | SI '(' funcion_evaluacion ')' . '{' funcion_recurs_asignacion '}'
+
+    '{'  desplazar e ir al estado 102
+
+
+Estado 93
+
+   37 funcion_evaluacion: recusivo_evaluacion funcion_evaluacion .
+
+    $default  reduce usando la regla 37 (funcion_evaluacion)
+
+
+Estado 94
+
+   32 recursivo_sentencia: OTRO '{' funcion_recurs_asignacion '}' .
+
+    $default  reduce usando la regla 32 (recursivo_sentencia)
+
+
+Estado 95
+
+   24 instrucciones: funcion_recurs_asignacion recurs_sentencias .
+
+    $default  reduce usando la regla 24 (instrucciones)
+
+
+Estado 96
+
+   33 recursivo_sentencia: OTRO '{' instrucciones '}' .
+
+    $default  reduce usando la regla 33 (recursivo_sentencia)
+
+
+Estado 97
+
+   34 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' . '{' instrucciones '}'
+   35                    | MIENTRAS '(' funcion_evaluacion ')' . '{' funcion_recurs_asignacion '}'
+
+    '{'  desplazar e ir al estado 103
+
+
+Estado 98
+
+   54 recursivo_prototipo: ID '=' ID '(' . exp ')' ';'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 104
+
+
+Estado 99
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID . '{' instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID ')' ':' ID . '{' funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    '{'  desplazar e ir al estado 105
+
+
+Estado 100
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   39 recusivo_evaluacion: exp AND exp .
+   40                    | exp AND exp . AND
+   41                    | exp AND exp . OR
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    AND        desplazar e ir al estado 106
+    OR         desplazar e ir al estado 107
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+    $default  reduce usando la regla 39 (recusivo_evaluacion)
+
+
+Estado 101
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   42 recusivo_evaluacion: exp OR exp .
+   43                    | exp OR exp . OR
+   44                    | exp OR exp . AND
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    AND        desplazar e ir al estado 108
+    OR         desplazar e ir al estado 109
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+    $default  reduce usando la regla 42 (recusivo_evaluacion)
+
+
+Estado 102
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' . instrucciones '}'
+   29                    | SI '(' funcion_evaluacion ')' '{' . instrucciones REGRESA exp ';' '}'
+   30                    | SI '(' funcion_evaluacion ')' '{' . REGRESA exp ';' '}'
+   31                    | SI '(' funcion_evaluacion ')' '{' . funcion_recurs_asignacion '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    REGRESA   desplazar e ir al estado 110
+    MIENTRAS  desplazar e ir al estado 30
+    ID        desplazar e ir al estado 2
+
+    funcion_recurs_asignacion  ir al estado 111
+    recursivo_asignacion       ir al estado 7
+    instrucciones              ir al estado 112
+    recurs_sentencias          ir al estado 82
+    recursivo_sentencia        ir al estado 33
+
+
+Estado 103
+
+   34 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' '{' . instrucciones '}'
+   35                    | MIENTRAS '(' funcion_evaluacion ')' '{' . funcion_recurs_asignacion '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    ID        desplazar e ir al estado 2
+
+    funcion_recurs_asignacion  ir al estado 113
+    recursivo_asignacion       ir al estado 7
+    instrucciones              ir al estado 114
+    recurs_sentencias          ir al estado 82
+    recursivo_sentencia        ir al estado 33
+
+
+Estado 104
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   54 recursivo_prototipo: ID '=' ID '(' exp . ')' ';'
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+    ')'        desplazar e ir al estado 115
+
+
+Estado 105
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' . instrucciones REGRESA exp ';' '}'
+   23                  | DEF ID '(' ID ')' ':' ID '{' . funcion_recurs_asignacion REGRESA exp ';' '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    ID        desplazar e ir al estado 2
+
+    funcion_recurs_asignacion  ir al estado 116
+    recursivo_asignacion       ir al estado 7
+    instrucciones              ir al estado 117
+    recurs_sentencias          ir al estado 82
+    recursivo_sentencia        ir al estado 33
+
+
+Estado 106
+
+   40 recusivo_evaluacion: exp AND exp AND .
+
+    $default  reduce usando la regla 40 (recusivo_evaluacion)
+
+
+Estado 107
+
+   41 recusivo_evaluacion: exp AND exp OR .
+
+    $default  reduce usando la regla 41 (recusivo_evaluacion)
+
+
+Estado 108
+
+   44 recusivo_evaluacion: exp OR exp AND .
+
+    $default  reduce usando la regla 44 (recusivo_evaluacion)
+
+
+Estado 109
+
+   43 recusivo_evaluacion: exp OR exp OR .
+
+    $default  reduce usando la regla 43 (recusivo_evaluacion)
+
+
+Estado 110
+
+   30 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' REGRESA . exp ';' '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 118
+
+
+Estado 111
+
+   24 instrucciones: funcion_recurs_asignacion . recurs_sentencias
+   31 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion . '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    '}'       desplazar e ir al estado 119
+
+    recurs_sentencias    ir al estado 95
+    recursivo_sentencia  ir al estado 33
+
+
+Estado 112
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones . '}'
+   29                    | SI '(' funcion_evaluacion ')' '{' instrucciones . REGRESA exp ';' '}'
+
+    REGRESA  desplazar e ir al estado 120
+    '}'      desplazar e ir al estado 121
+
+
+Estado 113
+
+   24 instrucciones: funcion_recurs_asignacion . recurs_sentencias
+   35 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion . '}'
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    MIENTRAS  desplazar e ir al estado 30
+    '}'       desplazar e ir al estado 122
+
+    recurs_sentencias    ir al estado 95
+    recursivo_sentencia  ir al estado 33
+
+
+Estado 114
+
+   34 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' '{' instrucciones . '}'
+
+    '}'  desplazar e ir al estado 123
+
+
+Estado 115
+
+   54 recursivo_prototipo: ID '=' ID '(' exp ')' . ';'
+
+    ';'  desplazar e ir al estado 124
+
+
+Estado 116
+
+   23 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion . REGRESA exp ';' '}'
+   24 instrucciones: funcion_recurs_asignacion . recurs_sentencias
+
+    SI        desplazar e ir al estado 28
+    OTRO      desplazar e ir al estado 29
+    REGRESA   desplazar e ir al estado 125
+    MIENTRAS  desplazar e ir al estado 30
+
+    recurs_sentencias    ir al estado 95
+    recursivo_sentencia  ir al estado 33
+
+
+Estado 117
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones . REGRESA exp ';' '}'
+
+    REGRESA  desplazar e ir al estado 126
+
+
+Estado 118
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   30 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' REGRESA exp . ';' '}'
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    ';'        desplazar e ir al estado 127
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+
+Estado 119
+
+   31 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}' .
+
+    $default  reduce usando la regla 31 (recursivo_sentencia)
+
+
+Estado 120
+
+   29 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones REGRESA . exp ';' '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 128
+
+
+Estado 121
+
+   28 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones '}' .
+
+    $default  reduce usando la regla 28 (recursivo_sentencia)
+
+
+Estado 122
+
+   35 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' '{' funcion_recurs_asignacion '}' .
+
+    $default  reduce usando la regla 35 (recursivo_sentencia)
+
+
+Estado 123
+
+   34 recursivo_sentencia: MIENTRAS '(' funcion_evaluacion ')' '{' instrucciones '}' .
+
+    $default  reduce usando la regla 34 (recursivo_sentencia)
+
+
+Estado 124
+
+   54 recursivo_prototipo: ID '=' ID '(' exp ')' ';' .
+
+    $default  reduce usando la regla 54 (recursivo_prototipo)
+
+
+Estado 125
+
+   23 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA . exp ';' '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 129
+
+
+Estado 126
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones REGRESA . exp ';' '}'
+
+    ENTERO  desplazar e ir al estado 24
+    ID      desplazar e ir al estado 25
+
+    exp  ir al estado 130
+
+
+Estado 127
+
+   30 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' REGRESA exp ';' . '}'
+
+    '}'  desplazar e ir al estado 131
+
+
+Estado 128
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   29 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones REGRESA exp . ';' '}'
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    ';'        desplazar e ir al estado 132
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+
+Estado 129
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   23 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp . ';' '}'
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    ';'        desplazar e ir al estado 133
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+
+Estado 130
+
+   10 exp: exp . '*' exp
+   11    | exp . '-' exp
+   12    | exp . '/' exp
+   13    | exp . '+' exp
+   14    | exp . IGUAL exp
+   15    | exp . DIFERENTE exp
+   16    | exp . MAYOR exp
+   17    | exp . MENOR exp
+   18    | exp . MAYORIG exp
+   19    | exp . MENORIG exp
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones REGRESA exp . ';' '}'
+
+    IGUAL      desplazar e ir al estado 41
+    DIFERENTE  desplazar e ir al estado 42
+    MAYOR      desplazar e ir al estado 43
+    MENOR      desplazar e ir al estado 44
+    MAYORIG    desplazar e ir al estado 45
+    MENORIG    desplazar e ir al estado 46
+    ';'        desplazar e ir al estado 134
+    '+'        desplazar e ir al estado 48
+    '-'        desplazar e ir al estado 49
+    '*'        desplazar e ir al estado 50
+    '/'        desplazar e ir al estado 51
+
+
+Estado 131
+
+   30 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' REGRESA exp ';' '}' .
+
+    $default  reduce usando la regla 30 (recursivo_sentencia)
+
+
+Estado 132
+
+   29 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones REGRESA exp ';' . '}'
+
+    '}'  desplazar e ir al estado 135
+
+
+Estado 133
+
+   23 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' . '}'
+
+    '}'  desplazar e ir al estado 136
+
+
+Estado 134
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones REGRESA exp ';' . '}'
+
+    '}'  desplazar e ir al estado 137
+
+
+Estado 135
+
+   29 recursivo_sentencia: SI '(' funcion_evaluacion ')' '{' instrucciones REGRESA exp ';' '}' .
+
+    $default  reduce usando la regla 29 (recursivo_sentencia)
+
+
+Estado 136
+
+   23 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' funcion_recurs_asignacion REGRESA exp ';' '}' .
+
+    $default  reduce usando la regla 23 (seccion_funciones)
+
+
+Estado 137
+
+   22 seccion_funciones: DEF ID '(' ID ')' ':' ID '{' instrucciones REGRESA exp ';' '}' .
+
+    $default  reduce usando la regla 22 (seccion_funciones)

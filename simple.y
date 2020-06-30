@@ -39,19 +39,20 @@ void yyerror(char *s)
 %nonassoc OR
 %token ID
 %token CADENA 
-%left '=' 
-%left '*' '/'
-%left '+' '-'
 
+%left ';' 
+%left '+' '-'
+%left '*' '/'
+
+%start program
      
 /* A continuación la gramática */
                                  
-
 %%
 
-program: inicio   
+program: sent  
 
-inicio: funcion_recurs_asignacion funcion_recurs menu 
+sent: funcion_recurs_asignacion funcion_recurs menu 
         | funcion_recurs menu 
         | menu
         ;
