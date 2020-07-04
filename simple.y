@@ -40,8 +40,6 @@ void yyerror(char *s){
 };
         
 %start program
-
-/* A continuaci�n la gram�tica */
                                  
 %%
 
