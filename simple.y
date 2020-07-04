@@ -34,12 +34,16 @@ void yyerror(char *s){
 %token  ENTERO 
 %token  CADENA
 
+%token INT
+
 %union{
   int ival;
   char *sval;
 };
         
 %start program
+
+/* A continuaci�n la gram�tica */
                                  
 %%
 
